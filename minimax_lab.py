@@ -1,14 +1,21 @@
 class Tablero:
-    colores_del_cuadro = {'blanco': '⬜', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
+    colores = {'blanco': '⬜', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
 
-    def __init__(self, color_cuadro='blanco'):
-        self.cuadrado = color_cuadro
+    def __init__(self, color='blanco'):
+        self.color = color
+
+    def get_color(self):
+        return self.color
+    
+    def set_color(self, color):
+        self.color = color
+
 
     def crear(self, alto=10, largo=10):
         '''
         Crear un tablero de 'x' tamaño alto x largo con el cuadrado blanco en el centro.
         '''
-        return (self.colores_del_cuadro[self.cuadrado] * largo + '\n') * alto
+        return (self.colores[self.color] * largo + '\n') * alto
 
 
 class TomyJerry:
@@ -18,9 +25,4 @@ class TomyJerry:
     def __init__(self, emoji_gato='full', emoji_raton='full'):
         self.tom = emoji_gato
         self.jerry = emoji_raton
-
-
-if __name__=='__main__':
-    t = Tablero()
-    print(t.crear())
 
