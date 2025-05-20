@@ -1,5 +1,6 @@
 class Tablero:
     colores = {'blanco': '⬜', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
+    tablero = {}
 
     def __init__(self, color='blanco', alto=10, largo=10):
         self.color = color
@@ -28,15 +29,18 @@ class Tablero:
         '''
         Crear un tablero de 'x' tamaño alto x largo con el cuadrado blanco en el centro.
         '''
-        tablero = {}
         for a in range(self.alto):
             for l in range(self.largo):
-                tablero[a] = {l: {
+                self.tablero[a] = {l: {
                     'color_de_fondo': self.colores[self.color],
                     'posicion': (a, l),
                     'ocupado': False
                     }}
-        return tablero
+        return self.tablero
+    
+    def imprimir(self):
+        for tablero in self.tablero:
+            print(tablero)
         
 
 class TomyJerry:
