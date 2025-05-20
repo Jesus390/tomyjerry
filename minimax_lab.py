@@ -1,9 +1,12 @@
 class TomyJerry:
-    
-    def __init__(self):
-        self.cuadrado = {'blanco': '⬜'}
-        self.tom = {'gato':'🐈', 'cara': '🐱'} 
-        self.jerry = {'raton':'🐁', 'cara':'🐭'}
+    colores_del_cuadro = {'blanco': '⬜', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
+    emojis_gato = {'full':'🐈', 'cara': '🐱'}
+    emojis_raton = {'raton':'🐁', 'cara':'🐭'}
+
+    def __init__(self, color_cuadro='blanco', emoji_gato='full', emoji_raton='full'):
+        self.cuadrado = color_cuadro
+        self.tom = emoji_gato
+        self.jerry = emoji_raton
 
     def print_(self):
         print(self.cuadrado['blanco'], self.tom['cara'], self.jerry['cara'])
@@ -12,9 +15,4 @@ class TomyJerry:
         '''
         Imprime un tablero de 'x' tamaño alto x largo con el cuadrado blanco en el centro.
         '''
-        tablero = ''
-        for _ in range(alto):
-            for _ in range(largo):
-                tablero += self.cuadrado['blanco']
-            tablero += '\n'
-        return tablero
+        return (self.cuadrado['blanco'] * largo + '\n') * alto
