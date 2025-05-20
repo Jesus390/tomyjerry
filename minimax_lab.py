@@ -8,9 +8,6 @@ class TomyJerry:
         self.tom = emoji_gato
         self.jerry = emoji_raton
 
-    def print_(self):
-        print(self.cuadrado['blanco'], self.tom['cara'], self.jerry['cara'])
-
     def print_tablero(self, alto=10, largo=10):
         '''
         Imprime un tablero de 'x' tamaño alto x largo con el cuadrado blanco en el centro.
