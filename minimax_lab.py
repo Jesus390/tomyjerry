@@ -28,8 +28,16 @@ class Tablero:
         '''
         Crear un tablero de 'x' tamaño alto x largo con el cuadrado blanco en el centro.
         '''
-        return (self.colores[self.color] * self.largo + '\n') * self.alto
-
+        tablero = {}
+        for a in range(self.alto):
+            for l in range(self.largo):
+                tablero[a] = {l: {
+                    'color_de_fondo': self.colores[self.color],
+                    'posicion': (a, l),
+                    'ocupado': False
+                    }}
+        return tablero
+        
 
 class TomyJerry:
     emojis_gato = {'full':'🐈', 'cara': '🐱'}
