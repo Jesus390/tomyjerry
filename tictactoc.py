@@ -182,15 +182,15 @@ def play_game(self):
        ai_turn = not ai_turn
 
 
-   # Game over
-   self.print_board()
-   winner = self.check_winner()
-   if winner == self.ai_player:
-       print("\nAI wins!")
-   elif winner == self.human_player:
-       print("\nCongratulations! You win!")
-   else:
-       print("\nIt's a tie!")
+        # Game over
+       self.print_board()
+       winner = self.check_winner()
+       if winner == self.ai_player:
+           print("\nAI wins!")
+       elif winner == self.human_player:
+           print("\nCongratulations! You win!")
+       else:
+           print("\nIt's a tie!")
 
 
 # Start the game
