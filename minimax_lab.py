@@ -53,11 +53,22 @@ class Tablero:
 class Animal:
     pass
 
-class TomyJerry:
-    emojis_gato = {'full':'🐈', 'cara': '🐱'}
-    emojis_raton = {'raton':'🐁', 'cara':'🐭'}
 
-    def __init__(self, emoji_gato='full', emoji_raton='full'):
-        self.tom = emoji_gato
-        self.jerry = emoji_raton
+class Gato(Animal):
+    emojis = {'full':'🐈', 'cara': '🐱'}
+    
+    def __init__(self, nombre='Tom', emoji='full'):
+        self.nombre = nombre
+        self.emoji = self.emojis[emoji]
+
+    def __str__(self):
+        return f"Class {self.nombre} {self.emoji}"
+
+
+class Raton(Animal):
+    emojis = {'raton':'🐁', 'cara':'🐭'}
+
+    def __init__(self, nombre='Jerry', emoji='full'):
+        self.nombre = nombre
+        self.emoji = self.emojis[emoji]
 
