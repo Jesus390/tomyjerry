@@ -50,6 +50,9 @@ class Tablero:
         print(aux)
         
 
+class Animal:
+    pass
+
 class TomyJerry:
     emojis_gato = {'full':'🐈', 'cara': '🐱'}
     emojis_raton = {'raton':'🐁', 'cara':'🐭'}
