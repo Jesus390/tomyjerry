@@ -52,27 +52,6 @@ class Tablero:
         print(aux)
         
 
-class Animal:
-    pass
-
-
-class Gato(Animal):
-    emojis = {'full':'🐈', 'cara': '🐱'}
-    
-    def __init__(self, nombre='Tom', emoji='full'):
-        self.nombre = nombre
-        self.emoji = self.emojis[emoji]
-
-    def __str__(self):
-        return f"Class {self.nombre} {self.emoji}"
-
-
-class Raton(Animal):
-    emojis = {'raton':'🐁', 'cara':'🐭'}
-
-    def __init__(self, nombre='Jerry', emoji='full'):
-        self.nombre = nombre
-        self.emoji = self.emojis[emoji]
 
 
 class Posicion():
@@ -80,6 +59,27 @@ class Posicion():
         self.pos_x = pos_x
         self.pos_y = pos_y
 
+class Jugador(Posicion):
+    def __init__(self, nombre, pos_x, pos_y):
+        super().__init__(pos_x, pos_y)
+        self.nombre = nombre
+
+class Raton(Jugador):
+    emojis = {'raton':'🐁', 'cara':'🐭'}
+
+    def __init__(self, nombre='Jerry', emoji='full'):
+        super().__init__(nombre, 0, 0)
+        self.emoji = self.emojis[emoji]
+
+class Gato(Jugador):
+    emojis = {'full':'🐈', 'cara': '🐱'}
+    
+    def __init__(self, nombre='Tom', emoji='full'):
+        super().__init__(nombre, 0, 0)
+        self.emoji = self.emojis[emoji]
+
+    def __str__(self):
+        return f"Class {self.nombre} {self.emoji}"
 
 class Pared(Posicion):
     emojis = {'default': '🚧', 'ladrillo': '🧱'}
@@ -87,5 +87,8 @@ class Pared(Posicion):
     def __init__(self, pos_x, pos_y, emoji='default'):
         super().__init__(pos_x, pos_y)
         self.emoji = emoji
+
+    def __str__(self):
+        return f"Class {self.pos_x} {self.pos_y} {self.emoji}"
 
         
