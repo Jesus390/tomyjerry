@@ -6,8 +6,10 @@ class Tablero:
         self.color = color
         self.alto = alto
         self.largo = largo
-        if self.alto <=2 or self.largo <=2:
-            raise("Error: El tablero debe tener un alto y un largo de al menos 3")
+        if self.alto <= 2:
+            raise("Error: El tablero debe tener un alto de al menos 3")
+        if self.largo <= 2:
+            raise("Error: El tablero debe tener un largo de al menos 3")
 
     def get_color(self):
         return self.color
@@ -72,3 +74,18 @@ class Raton(Animal):
         self.nombre = nombre
         self.emoji = self.emojis[emoji]
 
+
+class Posicion():
+    def __init__(self, pos_x, pos_y):
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+
+class Pared(Posicion):
+    emojis = {'default': '🚧', 'ladrillo': '🧱'}
+
+    def __init__(self, pos_x, pos_y, emoji='default'):
+        super().__init__(pos_x, pos_y)
+        self.emoji = emoji
+
+        
