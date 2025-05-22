@@ -5,6 +5,18 @@ class Jugador(Posicion):
         super().__init__(pos_x, pos_y)
         self.nombre = nombre
 
+    def mover_arriba(self):
+        self.pos_y = self.pos_y + 1
+    
+    def mover_abajo(self):
+        self.pos_y = self.pos_y - 1
+    
+    def mover_derecha(self):
+        self.pos_x = self.pos_x + 1
+
+    def mover_izquierda(self):
+        self.pos_x = self.pos_x - 1
+
 class Raton(Jugador):
     emojis = {'full':'🐁', 'cara':'🐭'}
 
