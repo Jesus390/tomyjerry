@@ -1,6 +1,7 @@
 class Tablero:
     colores = {'blanco': '⬜', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
     tablero = []
+    items = []
 
     def __init__(self, color='blanco', alto=10, largo=10):
         self.color = color
@@ -29,26 +30,41 @@ class Tablero:
     def set_largo(self, largo):
         self.largo = largo
 
+    def agregar_item(self, item):
+        self.items.append(item)
+
+
     def crear(self):
         '''
         Crear un tablero de 'x' tamaño alto x largo con el cuadrado blanco en el centro.
         '''
         for a in range(self.alto):
+            fila = []
             for l in range(self.largo):
-                self.tablero.append({
-                    'color_de_fondo': self.colores[self.color],
+                fila.append({
+                    'fondo': self.colores[self.color],
                     'posicion': (a, l),
                     'ocupado': False,
                     })
+            self.tablero.append(fila)
+        
+        for item in self.items:
+            self.tablero[item.pos_x][item.pos_y] = {
+                'fondo': item.emoji,
+                'posicion': (item.pos_x, item.pos_y),
+                'ocupado': True,
+            }
+
         return self.tablero
     
     def imprimir(self):
         print(f"Alto: {self.alto}\nLargo: {self.largo}\nLongitud: {len(self.tablero)}\n")
         aux = ''
-        for tablero in self.tablero:
-            aux += tablero['color_de_fondo']
-            if tablero['posicion'][1] == self.largo -1:
-                aux += '\n'
+        for filas in self.tablero:
+            for elemento in filas:
+                aux += elemento['fondo']
+                if elemento['posicion'][1] == self.largo -1:
+                    aux += '\n'
         print(aux)
         
 

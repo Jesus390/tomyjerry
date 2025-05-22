@@ -5,7 +5,7 @@ class Pared(Posicion):
 
     def __init__(self, pos_x, pos_y, emoji='default'):
         super().__init__(pos_x, pos_y)
-        self.emoji = emoji
+        self.emoji = self.emojis[emoji]
 
     def __str__(self):
         return f"Class {self.pos_x} {self.pos_y} {self.emoji}"
