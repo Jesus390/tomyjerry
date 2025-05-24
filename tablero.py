@@ -7,9 +7,9 @@ class Tablero:
         self.color = color
         self.alto = alto
         self.largo = largo
-        if self.alto <= 2:
+        if self.alto < 5:
             raise("Error: El tablero debe tener un alto de al menos 3")
-        if self.largo <= 2:
+        if self.largo < 5:
             raise("Error: El tablero debe tener un largo de al menos 3")
 
     def agregar_entidad(self, entidad):
