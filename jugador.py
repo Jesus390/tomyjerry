@@ -25,6 +25,16 @@ class Jugador(Posicion):
         self.ultima_posicion_y = self.posicion_y
         self.posicion_x = self.posicion_x + 1
 
+    def mover(self, movimiento):
+        if movimiento == "w":
+            self.mover_arriba()
+        elif movimiento == "a":
+            self.mover_izquierda()
+        elif movimiento == "d":
+            self.mover_derecha()
+        else:
+            self.mover_abajo()
+
 
 class Raton(Jugador):
     emojis = {'full':'🐁', 'cara':'🐭'}
