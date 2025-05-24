@@ -1,4 +1,4 @@
-from functions import *
+from functions import cls
 from tablero import Tablero
 
 class GameTomyJerry():
@@ -7,6 +7,7 @@ class GameTomyJerry():
 
     def obtener_movimiento(self):
         while True:
+            cls()
             print('''
 + Movimientos:
 w - Arriba
@@ -23,6 +24,7 @@ s - Abajo
         print("Bienvenido a GameTomyJerry")
         print("El juego se juega en un tablero de 10x10 casillas")
         print("El jugador puede moverse en las cuatro direcciones")
+        print(self.obtener_movimiento())
 
 if __name__=="__main__":
     juego = GameTomyJerry()
