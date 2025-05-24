@@ -1,7 +1,7 @@
 class Tablero:
     colores = {'blanco': '⬜', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
     tablero = []
-    items = []
+    endidades = []
 
     def __init__(self, color='blanco', alto=10, largo=10):
         self.color = color
@@ -30,8 +30,8 @@ class Tablero:
     def set_largo(self, largo):
         self.largo = largo
 
-    def agregar_item(self, item):
-        self.items.append(item)
+    def agregar_entidad(self, entidad):
+        self.endidades.append(entidad)
 
 
     def crear(self):
@@ -48,14 +48,17 @@ class Tablero:
                     })
             self.tablero.append(fila)
         
-        for item in self.items:
-            self.tablero[item.pos_x][item.pos_y] = {
-                'fondo': item.emoji,
-                'posicion': (item.pos_x, item.pos_y),
+        for entidad in self.endidades:
+            self.tablero[entidad.pos_x][entidad.pos_y] = {
+                'fondo': entidad.emoji,
+                'posicion': (entidad.pos_x, entidad.pos_y),
                 'ocupado': True,
             }
 
         return self.tablero
+    
+    def update(self, entidad):
+        pass
     
     def imprimir(self):
         print(f"Alto: {self.alto}\nLargo: {self.largo}\nLongitud: {len(self.tablero)}\n")
