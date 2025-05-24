@@ -1,21 +1,30 @@
 from posicion import Posicion
 
 class Jugador(Posicion):
-    def __init__(self, nombre, pos_x, pos_y):
-        super().__init__(pos_x, pos_y)
+    def __init__(self, nombre, posicion_x, posicion_y):
+        super().__init__(posicion_x, posicion_y)
         self.nombre = nombre
 
-    def mover_arriba(self):
-        self.pos_y = self.pos_y + 1
-    
-    def mover_abajo(self):
-        self.pos_y = self.pos_y - 1
-    
     def mover_derecha(self):
-        self.pos_x = self.pos_x + 1
+        self.ultima_posicion_x = self.posicion_x
+        self.ultima_posicion_y = self.posicion_y
+        self.posicion_y = self.posicion_y + 1
 
     def mover_izquierda(self):
-        self.pos_x = self.pos_x - 1
+        self.ultima_posicion_x = self.posicion_x
+        self.ultima_posicion_y = self.posicion_y
+        self.posicion_y = self.posicion_y - 1
+    
+    def mover_abajo(self):
+        self.ultima_posicion_x = self.posicion_x
+        self.ultima_posicion_y = self.posicion_y
+        self.posicion_x = self.posicion_x - 1
+    
+    def mover_arriba(self):
+        self.ultima_posicion_x = self.posicion_x
+        self.ultima_posicion_y = self.posicion_y
+        self.posicion_x = self.posicion_x + 1
+
 
 class Raton(Jugador):
     emojis = {'full':'🐁', 'cara':'🐭'}

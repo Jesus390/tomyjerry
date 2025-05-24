@@ -1,9 +1,9 @@
 class Tablero:
-    colores = {'blanco': '⬜', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
+    colores = {'default': ' . ', 'blanco': '⬜', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
     tablero = []
     endidades = []
 
-    def __init__(self, color='blanco', alto=10, largo=10):
+    def __init__(self, color='default', alto=10, largo=10):
         self.color = color
         self.alto = alto
         self.largo = largo
@@ -49,17 +49,27 @@ class Tablero:
             self.tablero.append(fila)
         
         for entidad in self.endidades:
-            self.tablero[entidad.pos_x][entidad.pos_y] = {
+            self.tablero[entidad.posicion_x][entidad.posicion_y] = {
                 'fondo': entidad.emoji,
-                'posicion': (entidad.pos_x, entidad.pos_y),
+                'posicion': (entidad.posicion_x, entidad.posicion_y),
                 'ocupado': True,
             }
 
         return self.tablero
     
     def update(self, entidad):
-        pass
-    
+        self.tablero[entidad.ultima_posicion_x][entidad.ultima_posicion_y] = {
+            'fondo': self.colores[self.color],
+            'posicion': (entidad.ultima_posicion_x, entidad.ultima_posicion_y),
+            'ocupado': False,
+        }
+        self.tablero[entidad.posicion_x][entidad.posicion_y] = {
+            'fondo': entidad.emoji,
+            'posicion': (entidad.posicion_x, entidad.posicion_y),
+            'ocupado': True,
+        }
+
+
     def imprimir(self):
         print(f"Alto: {self.alto}\nLargo: {self.largo}\nLongitud: {len(self.tablero)}\n")
         aux = ''
