@@ -12,24 +12,6 @@ class Tablero:
         if self.largo <= 2:
             raise("Error: El tablero debe tener un largo de al menos 3")
 
-    def get_color(self):
-        return self.color
-    
-    def set_color(self, color):
-        self.color = color
-    
-    def get_alto(self):
-        return self.alto
-
-    def set_alto(self, alto):
-        self.alto = alto
-
-    def get_largo(self):
-        return self.largo
-    
-    def set_largo(self, largo):
-        self.largo = largo
-
     def agregar_entidad(self, entidad):
         self.endidades.append(entidad)
 
