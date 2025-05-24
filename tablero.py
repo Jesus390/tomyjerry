@@ -8,9 +8,9 @@ class Tablero:
         self.alto = alto
         self.largo = largo
         if self.alto < 5:
-            raise("Error: El tablero debe tener un alto de al menos 3")
+            raise("Error: El tablero debe tener un alto de al menos 5")
         if self.largo < 5:
-            raise("Error: El tablero debe tener un largo de al menos 3")
+            raise("Error: El tablero debe tener un largo de al menos 5")
 
     def agregar_entidad(self, entidad):
         self.endidades.append(entidad)
