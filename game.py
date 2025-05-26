@@ -2,28 +2,26 @@ from functions import cls
 from tablero import Tablero
 
 class GameTomyJerry():
+    
     def __init__(self):
         pass
+
+    def es_ganador(self, tablero, jugador_actual, jugador_siguiente):
+        if (jugador_actual.posicion_x == jugador_siguiente.posicion_x) and (jugador_actual.posicion_y == jugador_siguiente.posicion_y):
+            return (True, (jugador_actual.posicion_x, jugador_actual.posicion_y))
+        else:
+            return (False, None)
 
     def obtener_movimiento(self):
         while True:
             cls()
-            print('''
-+ Movimientos:
-w - Arriba
-a - Izquierda
-d - Derecha
-s - Abajo
-''')
-            movimiento = input("Ingrese el movimiento: ")
+            print("+ Movimientos:\n(w)Arriba\n(a)Izquierda\n(d)Derecha\n(s)Abajo")
+            movimiento = input("Ingrese movimiento: ")
             if movimiento in ['w', 'a', 'd', 's']:
                 return movimiento
 
-
     def run(self):
         print("Bienvenido a GameTomyJerry")
-        print("El juego se juega en un tablero de 10x10 casillas")
-        print("El jugador puede moverse en las cuatro direcciones")
         print(self.obtener_movimiento())
 
 if __name__=="__main__":
