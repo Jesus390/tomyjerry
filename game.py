@@ -1,5 +1,7 @@
+from jugador import Gato, Raton
 from functions import cls
 from tablero import Tablero
+
 
 class GameTomyJerry():
     
@@ -14,7 +16,6 @@ class GameTomyJerry():
 
     def obtener_movimiento(self):
         while True:
-            cls()
             print("+ Movimientos:\n(w)Arriba\n(a)Izquierda\n(d)Derecha\n(s)Abajo")
             movimiento = input("Ingrese movimiento: ")
             if movimiento in ['w', 'a', 'd', 's']:
@@ -22,8 +23,22 @@ class GameTomyJerry():
 
     def run(self):
         print("Bienvenido a GameTomyJerry")
-        print(self.obtener_movimiento())
-
+        while True:
+            print("Ingrese el movimiento para el raton: ")
+            movimiento_raton = self.obtener_movimiento()
 if __name__=="__main__":
+    # instancias de entidades
     juego = GameTomyJerry()
+    tablero = Tablero()
+    gato = Gato(0, 0)
+    raton = Raton(7, 7)
+
+    # agregar entidades
+    tablero.agregar_entidad(gato)
+    tablero.agregar_entidad(raton)
+
+    # crear el tablero
+    tablero.crear()
+
+    # run game
     juego.run()
