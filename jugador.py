@@ -5,25 +5,25 @@ class Jugador(Posicion):
         super().__init__(posicion_x, posicion_y)
         self.nombre = nombre
 
-    def mover_derecha(self, posicion):
+    def mover_derecha(self):
         self.ultima_posicion_x = self.posicion_x
         self.ultima_posicion_y = self.posicion_y
-        self.posicion_y = posicion + 1
+        self.posicion_y = self.posicion_y + 1
 
-    def mover_izquierda(self, posicion):
+    def mover_izquierda(self):
         self.ultima_posicion_x = self.posicion_x
         self.ultima_posicion_y = self.posicion_y
-        self.posicion_y = posicion - 1
+        self.posicion_y = self.posicion_y - 1
     
-    def mover_abajo(self, posicion):
+    def mover_abajo(self):
         self.ultima_posicion_x = self.posicion_x
         self.ultima_posicion_y = self.posicion_y
-        self.posicion_x = posicion - 1
+        self.posicion_x = self.posicion_x - 1
     
-    def mover_arriba(self, posicion):
+    def mover_arriba(self):
         self.ultima_posicion_x = self.posicion_x
         self.ultima_posicion_y = self.posicion_y
-        self.posicion_x = posicion + 1
+        self.posicion_x = self.posicion_x + 1
 
     def mover(self, movimiento):
         if movimiento == "w":
