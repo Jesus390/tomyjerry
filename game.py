@@ -24,8 +24,15 @@ class GameTomyJerry():
     def run(self):
         print("Bienvenido a GameTomyJerry")
         while True:
+            input()
+            cls()
             print("Ingrese el movimiento para el raton: ")
             movimiento_raton = self.obtener_movimiento()
+            raton.mover(movimiento_raton)
+            tablero.update(raton)
+            tablero.imprimir()
+
+
 if __name__=="__main__":
     # instancias de entidades
     juego = GameTomyJerry()
@@ -39,6 +46,8 @@ if __name__=="__main__":
 
     # crear el tablero
     tablero.crear()
+
+    tablero.imprimir()
 
     # run game
     juego.run()
