@@ -1,53 +1,46 @@
-from jugador import Gato, Raton
-from functions import cls
+import time
 from tablero import Tablero
+from jugador import Raton, Gato
+from minimax import Minimax
 
-
-class GameTomyJerry():
-    
-    def __init__(self):
-        pass
-
-    def es_ganador(self, tablero, jugador_actual, jugador_siguiente):
-        if (jugador_actual.posicion_x == jugador_siguiente.posicion_x) and (jugador_actual.posicion_y == jugador_siguiente.posicion_y):
-            return (True, (jugador_actual.posicion_x, jugador_actual.posicion_y))
-        else:
-            return (False, None)
-
-    def obtener_movimiento(self):
-        while True:
-            print("+ Movimientos:\n(w)Arriba\n(a)Izquierda\n(d)Derecha\n(s)Abajo")
-            movimiento = input("Ingrese movimiento: ")
-            if movimiento in ['w', 'a', 'd', 's']:
-                return movimiento
-
-    def run(self):
-        print("Bienvenido a GameTomyJerry")
-        while True:
-            input()
-            cls()
-            print("Ingrese el movimiento para el raton: ")
-            movimiento_raton = self.obtener_movimiento()
-            raton.mover(movimiento_raton)
-            tablero.update(raton)
-            tablero.imprimir()
-
-
-if __name__=="__main__":
-    # instancias de entidades
-    juego = GameTomyJerry()
-    tablero = Tablero()
-    gato = Gato(0, 0)
-    raton = Raton(7, 7)
-
-    # agregar entidades
-    tablero.agregar_entidad(gato)
+def juego():
+    tablero = Tablero(color='verde', alto=7, largo=7)
+    raton = Raton(0, 0)
+    gato = Gato(6, 6)
     tablero.agregar_entidad(raton)
-
-    # crear el tablero
+    tablero.agregar_entidad(gato)
     tablero.crear()
-
     tablero.imprimir()
 
-    # run game
-    juego.run()
+    minimax = Minimax()
+    max_turnos = 30
+
+    for turno in range(max_turnos):
+        print(f"\nTurno {turno + 1}")
+
+        # Turno gato (maximizador)
+        _, mov_gato = minimax.minimax(raton, gato, tablero, 4, 'gato')
+        gato.mover(mov_gato)
+        tablero.update(gato)
+        tablero.imprimir()
+        time.sleep(1)
+
+        if raton.posicion_x == gato.posicion_x and raton.posicion_y == gato.posicion_y:
+            print("¡El gato atrapó al ratón!")
+            break
+
+        # Turno ratón (maximizador)
+        _, mov_raton = minimax.minimax(raton, gato, tablero, 4, 'raton')
+        raton.mover(mov_raton)
+        tablero.update(raton)
+        tablero.imprimir()
+        time.sleep(1)
+
+        if raton.posicion_x == gato.posicion_x and raton.posicion_y == gato.posicion_y:
+            print("¡El gato atrapó al ratón!")
+            break
+    else:
+        print("¡El ratón escapó!")
+
+if __name__ == "__main__":
+    juego()
