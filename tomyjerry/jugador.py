@@ -4,6 +4,7 @@ class Jugador(Posicion):
     def __init__(self, nombre, posicion_x, posicion_y):
         super().__init__(posicion_x, posicion_y)
         self.nombre = nombre
+        self.movimientos = [(1, 0), (-1, 0), (0, 1), (0, -1)] # para el minimax
 
     def mover_derecha(self):
         self.ultima_posicion_x = self.posicion_x
