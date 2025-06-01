@@ -12,17 +12,8 @@ class GameTomyJerry():
         else:
             return (False, None)
 
-    def obtener_movimiento(self):
-        while True:
-            cls()
-            print("+ Movimientos:\n(w)Arriba\n(a)Izquierda\n(d)Derecha\n(s)Abajo")
-            movimiento = input("Ingrese movimiento: ")
-            if movimiento in ['w', 'a', 'd', 's']:
-                return movimiento
-
     def run(self):
         print("Bienvenido a GameTomyJerry")
-        print(self.obtener_movimiento())
 
 if __name__=="__main__":
     juego = GameTomyJerry()
