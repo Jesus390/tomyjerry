@@ -19,12 +19,12 @@ class Jugador(Posicion):
     def mover_abajo(self):
         self.ultima_posicion_x = self.posicion_x
         self.ultima_posicion_y = self.posicion_y
-        self.posicion_x = self.posicion_x - 1
+        self.posicion_x = self.posicion_x + 1
     
     def mover_arriba(self):
         self.ultima_posicion_x = self.posicion_x
         self.ultima_posicion_y = self.posicion_y
-        self.posicion_x = self.posicion_x + 1
+        self.posicion_x = self.posicion_x - 1
 
     def mover(self, movimiento):
         if movimiento == "w":
@@ -35,6 +35,13 @@ class Jugador(Posicion):
             self.mover_derecha()
         else:
             self.mover_abajo()
+
+    def obtener_movimiento(self):
+        while True:
+            print("+ Movimientos:\n(w)Arriba\n(a)Izquierda\n(d)Derecha\n(s)Abajo")
+            movimiento = input("Ingrese movimiento: ")
+            if movimiento in ['w', 'a', 'd', 's']:
+                return movimiento
 
 
 class Raton(Jugador):
