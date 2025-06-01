@@ -1,5 +1,5 @@
 class Tablero:
-    colores = {'default': '⬜', 'blanco': ' . ', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
+    colores = {'default': ' . ', 'blanco': '⬜', 'negro': '⬛', 'azul': '🟦', 'verde': '🟩', 'morado': '🟪', 'amarillo': '🟨', 'rojo': '🟥', 'marron': '🟫', 'naranja': '🟧'}
     tablero = []
     endidades = []
 
