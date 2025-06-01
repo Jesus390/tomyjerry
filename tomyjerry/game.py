@@ -1,5 +1,5 @@
-from functions import cls
-from tablero import Tablero
+from tomyjerry.functions import cls
+from tomyjerry.tablero import Tablero
 
 class GameTomyJerry():
     

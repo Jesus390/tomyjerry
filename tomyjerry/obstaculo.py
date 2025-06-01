@@ -1,4 +1,4 @@
-from posicion import Posicion
+from tomyjerry.posicion import Posicion
 
 class Pared(Posicion):
     emojis = {'default': '🚧', 'ladrillo': '🧱'}
