@@ -17,7 +17,7 @@ class Tablero:
         #             self.tablero[entidad.ultima_posicion_columna][entidad.ultima_posicion_fila] = ' . '
         #             break
         self.tablero[entidad.ultima_columna][entidad.ultima_fila] = ' . '
-        self.tablero[entidad.posicion_columna][entidad.posicion_fila] = f' {entidad.name} '
+        self.tablero[entidad.columna][entidad.fila] = f' {entidad.name} '
 
     def imprimir(self):
         aux = ''
@@ -41,7 +41,7 @@ class Jugador:
         return (self.columna + posicion[0], self.fila + posicion[1])
 
     def is_inTablero(self, posicion):
-        return 0 <= posicion[0] < self.tablero.fila and 0 <= posicion[1] < self.tablero.columna
+        return 0 <= posicion[0] < self.tablero.filas and 0 <= posicion[1] < self.tablero.columnas
     
     def arriba(self):
         return (-1, 0)
