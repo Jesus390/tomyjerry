@@ -1,5 +1,5 @@
 class Tablero:
-    def __init__(self, columnas=10, filas=10):
+    def __init__(self, columnas, filas):
         self.columnas = columnas
         self.filas = filas
         self.tablero = None
@@ -97,23 +97,54 @@ class Jugador:
         return (self.columna, self.fila)
     
 class Gato(Jugador):
+    def __init__(self, columna, fila, tablero, name='G'):
+        super().__init__(columna, fila, tablero)
+        self.name = name
+
+class Raton(Jugador):
     def __init__(self, columna, fila, tablero, name='R'):
         super().__init__(columna, fila, tablero)
         self.name = name
 
+class Game():
+    def __init__(self):
+        pass
+
+    def is_over(self, pos_raton, pos_gato):
+        return pos_raton[0]==pos_gato[0] and pos_raton[1]==pos_gato[1]
+
 if __name__=="__main__":
-    tablero = Tablero()
-    gato = Gato(0, 0, tablero)
+    filas = 10
+    columnas = 10
+
+    # instancias
+    game = Game()
+    tablero = Tablero(filas, columnas)
+    raton = Raton(0, 0, tablero)
+    gato = Gato(filas-1, columnas-1, tablero)
     
     tablero.crear()
-    tablero.imprimir()
     
+    tablero.agregar(raton)
     tablero.agregar(gato)
+    
+    tablero.imprimir()
 
-    print(gato.get_posicion())
+    print(f" Posicion Gato: {gato.get_posicion()}")
+    print(f" Posicion Raton: {raton.get_posicion()}")
     while True:
         print()
-        movimiento = input("Ingresa el movimiento: ")
+        
+        movimiento = input("Ingresa el movimiento (Raton): ")
+        raton.mover(movimiento)
+        tablero.update(raton)
+
+        movimiento = input("Ingresa el movimiento (Gato): ")
         gato.mover(movimiento)
         tablero.update(gato)
+        
+        if game.is_over(raton.get_posicion(), gato.get_posicion()):
+            print(f"Juego terminado.... GATO is WIN.")
+            break
+
         tablero.imprimir()
