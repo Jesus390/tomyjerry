@@ -1,6 +1,7 @@
 from tomyjerry.functions import cls
 from tomyjerry.tablero import Tablero
 
+
 class GameTomyJerry():
     
     def __init__(self):
@@ -16,5 +17,20 @@ class GameTomyJerry():
         print("Bienvenido a GameTomyJerry")
 
 if __name__=="__main__":
+    # instancias de entidades
     juego = GameTomyJerry()
+    tablero = Tablero()
+    gato = Gato(0, 0)
+    raton = Raton(7, 7)
+
+    # agregar entidades
+    tablero.agregar_entidad(gato)
+    tablero.agregar_entidad(raton)
+
+    # crear el tablero
+    tablero.crear()
+
+    tablero.imprimir()
+
+    # run game
     juego.run()
