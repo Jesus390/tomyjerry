@@ -3,14 +3,14 @@ class Tablero:
     tablero = []
     endidades = []
 
-    def __init__(self, color='default', alto=10, largo=10):
+    def __init__(self, color='default', fila=10, columna=10):
         self.color = color
-        self.alto = alto
-        self.largo = largo
-        if self.alto < 5:
-            raise("Error: El tablero debe tener un alto de al menos 5")
-        if self.largo < 5:
-            raise("Error: El tablero debe tener un largo de al menos 5")
+        self.fila = fila
+        self.columna = columna
+        if self.fila < 5:
+            raise("Error: El tablero debe tener un fila de al menos 5")
+        if self.columna < 5:
+            raise("Error: El tablero debe tener un columna de al menos 5")
 
     def agregar_entidad(self, entidad):
         self.endidades.append(entidad)
@@ -18,11 +18,11 @@ class Tablero:
 
     def crear(self):
         '''
-        Crear un tablero de 'x' tamaño alto x largo con el cuadrado blanco en el centro.
+        Crear un tablero de 'x' tamaño fila x columna con el cuadrado blanco en el centro.
         '''
-        for a in range(self.alto):
+        for a in range(self.fila):
             fila = []
-            for l in range(self.largo):
+            for l in range(self.columna):
                 fila.append({
                     'fondo': self.colores[self.color],
                     'ocupado': False,
@@ -49,7 +49,7 @@ class Tablero:
 
 
     def imprimir(self):
-        print(f"Alto: {self.alto}\nLargo: {self.largo}\nLongitud: {len(self.tablero)}\n")
+        print(f"fila: {self.fila} | Largo: {self.columna} | Longitud: {len(self.tablero)}\n")
         aux = ''
         for filas in self.tablero:
             for elemento in filas:
@@ -57,4 +57,3 @@ class Tablero:
             aux += '\n'
         print(aux)
         
-

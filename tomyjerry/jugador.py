@@ -35,13 +35,7 @@ class Jugador(Posicion):
             self.mover_derecha()
         else:
             self.mover_abajo()
-
-    def obtener_movimiento(self):
-        while True:
-            print("+ Movimientos:\n(w)Arriba\n(a)Izquierda\n(d)Derecha\n(s)Abajo")
-            movimiento = input("Ingrese movimiento: ")
-            if movimiento in ['w', 'a', 'd', 's']:
-                return movimiento
+        return (self.posicion_x, self.posicion_y)
 
 
 class Raton(Jugador):
