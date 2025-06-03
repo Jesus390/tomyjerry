@@ -11,11 +11,6 @@ class Tablero:
         self.tablero[entidad.columna][entidad.fila] = entidad.name
 
     def update(self, entidad):
-        # for columnas in self.tablero:
-        #     for fila in columnas:
-        #         if entidad.name.strip() == 'R':
-        #             self.tablero[entidad.ultima_posicion_columna][entidad.ultima_posicion_fila] = ' . '
-        #             break
         self.tablero[entidad.ultima_columna][entidad.ultima_fila] = ' . '
         self.tablero[entidad.columna][entidad.fila] = f' {entidad.name} '
 
@@ -44,16 +39,16 @@ class Jugador:
         return 0 <= posicion[0] < self.tablero.filas and 0 <= posicion[1] < self.tablero.columnas
     
     def arriba(self):
-        return (-1, 0)
+        return self.movimientos[3] # (-1, 0)
     
     def abajo(self):
-        return (1, 0)
+        return self.movimientos[2] # (1, 0)
     
     def izquierda(self):
-        return (0, -1)
+        return self.movimientos[1] # (0, -1)
     
     def derecha(self):
-        return (0, 1)
+        return self.movimientos[0] # (0, 1)
 
     def mover(self, movimiento:str):
         if movimiento.lower() == 'w':
