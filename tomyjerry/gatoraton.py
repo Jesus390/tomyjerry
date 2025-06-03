@@ -8,7 +8,7 @@ class Tablero:
         self.tablero = [[' . ' for _ in range(self.filas)] for _ in range(self.columnas)]
 
     def agregar(self, entidad):
-        self.tablero[entidad.columna][entidad.fila] = entidad.name
+        self.tablero[entidad.columna][entidad.fila] = f' {entidad.name} '
 
     def update(self, entidad):
         self.tablero[entidad.ultima_columna][entidad.ultima_fila] = ' . '
@@ -34,6 +34,9 @@ class Jugador:
 
     def calcular_movimiento(self, posicion):
         return (self.columna + posicion[0], self.fila + posicion[1])
+    
+    def movimientos_disponibles(self):
+        return [(self.columna + i, self.fila + j) for i, j in self.movimientos if self.is_inTablero((self.columna + i, self.fila + j))]
 
     def is_inTablero(self, posicion):
         return 0 <= posicion[0] < self.tablero.filas and 0 <= posicion[1] < self.tablero.columnas
@@ -130,10 +133,14 @@ if __name__=="__main__":
     while True:
         print()
         
+        print("1. Mover raton")
+        print("Movimientos disponibles Raton:", raton.movimientos_disponibles())
         movimiento = input("Ingresa el movimiento (Raton): ")
         raton.mover(movimiento)
         tablero.update(raton)
 
+        print("2. Mover gato")
+        print("Movimientos disponibles Gato:", gato.movimientos_disponibles())
         movimiento = input("Ingresa el movimiento (Gato): ")
         gato.mover(movimiento)
         tablero.update(gato)
