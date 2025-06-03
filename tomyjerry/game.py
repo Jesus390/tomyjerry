@@ -1,6 +1,6 @@
 from tomyjerry.functions import cls
 from tomyjerry.tablero import Tablero
-
+from jugador import Gato, Raton
 
 class GameTomyJerry():
     
