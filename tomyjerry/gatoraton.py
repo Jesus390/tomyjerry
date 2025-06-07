@@ -111,9 +111,58 @@ class Game():
     def is_over(self, pos_raton, pos_gato):
         return pos_raton[0]==pos_gato[0] and pos_raton[1]==pos_gato[1]
 
+def is_gato_win(raton, gato):
+    return gato.fila == raton.fila and gato.columna == raton.columna
+
+# Heuristica: DISTANCIA MANHATAN
+# def distancia_manh(xr, yr, xg, yg):
+def distancia_manh(raton, gato):
+    distancia= abs(raton.fila - gato.fila) + abs(raton.columna - gato.columna)
+    # distancia= abs(xr - xg) + abs(yr - yg)
+    return distancia
+
+class Minimax:
+    def __init__(self, profundidad_max=4):
+        self.profundidad_max = profundidad_max
+
+    def evaluar(self, raton, gato):
+        if is_gato_win(raton, gato):
+            return -100  # pérdida para el ratón
+        return distancia_manh(raton, gato)
+
+    def minimax(self, raton, gato, profundidad, maximizando):
+        if profundidad == 0 or is_gato_win(raton, gato):
+            return self.evaluar(raton, gato), None
+
+        mejor_valor = float('-inf') if maximizando else float('inf')
+        mejor_mov = None
+
+        jugador = raton if maximizando else gato
+        for mov in jugador.movimientos_disponibles():
+            copia_raton = Raton(raton.columna, raton.fila, raton.tablero)
+            copia_gato = Gato(gato.columna, gato.fila, gato.tablero)
+
+            if maximizando:
+                copia_raton.columna, copia_raton.fila = mov
+            else:
+                copia_gato.columna, copia_gato.fila = mov
+
+            valor, _ = self.minimax(copia_raton, copia_gato, profundidad - 1, not maximizando)
+
+            if maximizando and valor > mejor_valor:
+                mejor_valor, mejor_mov = valor, mov
+            elif not maximizando and valor < mejor_valor:
+                mejor_valor, mejor_mov = valor, mov
+
+        return mejor_valor, mejor_mov
+
+
 if __name__=="__main__":
-    filas = 10
-    columnas = 10
+    minimax = Minimax(profundidad_max=4)
+
+    filas = 5
+    columnas = 5
+    turnos = 15
 
     # instancias
     game = Game()
@@ -130,23 +179,71 @@ if __name__=="__main__":
 
     print(f" Posicion Gato: {gato.get_posicion()}")
     print(f" Posicion Raton: {raton.get_posicion()}")
-    while True:
-        print()
-        
-        print("1. Mover raton")
-        print("Movimientos disponibles Raton:", raton.movimientos_disponibles())
-        movimiento = input("Ingresa el movimiento (Raton): ")
-        raton.mover(movimiento)
-        tablero.update(raton)
 
-        print("2. Mover gato")
-        print("Movimientos disponibles Gato:", gato.movimientos_disponibles())
-        movimiento = input("Ingresa el movimiento (Gato): ")
-        gato.mover(movimiento)
-        tablero.update(gato)
+    while turnos >= 0:
+        print(f"\nTurno: {5 - turnos}")
+        print(f"Distancia Manhattan: {distancia_manh(raton, gato)}")
         
+        # Movimiento del RATÓN con Minimax (Max)
+        _, mejor_mov = minimax.minimax(raton, gato, 3, True)
+        if mejor_mov:
+            raton.ultima_columna, raton.ultima_fila = raton.columna, raton.fila
+            raton.columna, raton.fila = mejor_mov
+            tablero.update(raton)
+
+        # Movimiento del GATO con Minimax (Min)
+        _, mejor_mov = minimax.minimax(raton, gato, 3, False)
+        if mejor_mov:
+            gato.ultima_columna, gato.ultima_fila = gato.columna, gato.fila
+            gato.columna, gato.fila = mejor_mov
+            tablero.update(gato)
+
         if game.is_over(raton.get_posicion(), gato.get_posicion()):
             print(f"Juego terminado.... GATO is WIN.")
             break
 
         tablero.imprimir()
+        turnos -= 1
+
+
+
+#     filas = 5
+#     columnas = 5
+#     turnos = 5
+
+#     # instancias
+#     game = Game()
+#     tablero = Tablero(filas, columnas)
+#     raton = Raton(0, 0, tablero)
+#     gato = Gato(filas-1, columnas-1, tablero)
+    
+#     tablero.crear()
+    
+#     tablero.agregar(raton)
+#     tablero.agregar(gato)
+    
+#     tablero.imprimir()
+
+#     print(f" Posicion Gato: {gato.get_posicion()}")
+#     print(f" Posicion Raton: {raton.get_posicion()}")
+#     while turnos >= 0:
+#         print()
+#         print(f"Distancia Manhattan: {distancia_manh(raton, gato)}")
+#         print("1. Mover raton")
+#         print("Movimientos disponibles Raton:", raton.movimientos_disponibles())
+#         movimiento = input("Ingresa el movimiento (Raton): ")
+#         raton.mover(movimiento)
+#         tablero.update(raton)
+
+#         print("2. Mover gato")
+#         print("Movimientos disponibles Gato:", gato.movimientos_disponibles())
+#         movimiento = input("Ingresa el movimiento (Gato): ")
+#         gato.mover(movimiento)
+#         tablero.update(gato)
+        
+#         if game.is_over(raton.get_posicion(), gato.get_posicion()):
+#             print(f"Juego terminado.... GATO is WIN.")
+#             break
+
+#         tablero.imprimir()
+#         turnos -= 1
