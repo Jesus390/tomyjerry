@@ -38,6 +38,14 @@ class Jugador:
     def movimientos_disponibles(self):
         return [(self.columna + i, self.fila + j) for i, j in self.movimientos if self.is_inTablero((self.columna + i, self.fila + j))]
 
+    def get_movimiento(self):
+        while True:
+            movimiento = input("Movimientos (a, w, d, s): ")
+            if movimiento in ['a', 'w', 'd', 's']:
+                return movimiento
+            else:
+                print("Movimiento invalido. Por favor, ingrese a, w, d, s")
+
     def is_inTablero(self, posicion):
         return 0 <= posicion[0] < self.tablero.filas and 0 <= posicion[1] < self.tablero.columnas
     
