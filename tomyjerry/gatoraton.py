@@ -108,8 +108,8 @@ class Game():
     def __init__(self):
         pass
 
-    def is_over(self, pos_raton, pos_gato):
-        return pos_raton[0]==pos_gato[0] and pos_raton[1]==pos_gato[1]
+    def is_gato_win(self, raton, gato):
+        return gato.fila == raton.fila and gato.columna == raton.columna
 
 def is_gato_win(raton, gato):
     return gato.fila == raton.fila and gato.columna == raton.columna
