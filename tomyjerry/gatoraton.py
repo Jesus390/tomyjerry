@@ -53,15 +53,18 @@ class Tablero:
         '''
         return 0 <= fila < self.filas and 0 <= columna < self.columnas
     
-    def actualizar_entidad(self, entidad):
-        # Borra la posición anterior
-        for f in range(self.filas):
-            for c in range(self.columnas):
-                if self.tablero[f][c] == f' {entidad.simbolo} ':
-                    self.tablero[f][c] = '.'
-        # Coloca al jugador en la nueva posición
-        self.tablero[entidad.fila][entidad.columna] = f' {entidad.simbolo} '
+    # def actualizar_entidad(self, entidad):
+    #     # Limpia la posición anterior de esta entidad
+    #     for f in range(self.filas):
+    #         for c in range(self.columnas):
+    #             if self.tablero[f][c] == entidad.simbolo:
+    #                 self.tablero[f][c] = '.'
+    #     # Coloca la nueva posición
+    #     self.tablero[entidad.fila][entidad.columna] = entidad.simbolo
 
+    def actualizar_entidad(self, entidad):
+        self.tablero[entidad.ultima_fila][entidad.ultima_columna] = '.'
+        self.tablero[entidad.fila][entidad.columna] = entidad.simbolo
 
 class Entidad:
     '''
@@ -198,6 +201,7 @@ if __name__ == "__main__":
         # Movimiento del ratón
         mejor_movimiento_raton = minimax.minimax(raton, gato, 3, True)
         if mejor_movimiento_raton and mejor_movimiento_raton[1]:
+            raton.ultima_fila, raton.ultima_columna = raton.fila, raton.columna
             raton.fila, raton.columna = mejor_movimiento_raton[1]
             tablero.actualizar_entidad(raton)
         
@@ -215,6 +219,7 @@ if __name__ == "__main__":
         # Movimiento del gato
         mejor_movimiento_gato = minimax.minimax(raton, gato, 3, False)
         if mejor_movimiento_gato and mejor_movimiento_gato[1]:
+            gato.ultima_fila, gato.ultima_columna = gato.fila, gato.columna
             gato.fila, gato.columna = mejor_movimiento_gato[1]
             tablero.actualizar_entidad(gato)
 
