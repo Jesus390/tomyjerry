@@ -1,15 +1,15 @@
 from posicion import Posicion
 
 class Entidad():
-    def __init__(self, posicion_x, posicion_y):
-        self.posicion_x = posicion_x
-        self.posicion_y = posicion_y
-        self.ultima_posicion_x = None
-        self.ultima_posicion_y = None
+    def __init__(self, fila, columna):
+        self.fila = fila
+        self.columna = columna
+        self.ultima_fila = None
+        self.ultima_columna = None
 
 class Jugador(Entidad):
-    def __init__(self, posicion_x, posicion_y):
-        super().__init__(posicion_x, posicion_y)
+    def __init__(self, fila, columna):
+        super().__init__(fila, columna)
         self.movimientos = [(1, 0), (-1, 0), (0, 1), (0, -1)] # para el minimax
 
     def is_movimiento_valido(self, movimiento, tablero):
@@ -17,8 +17,8 @@ class Jugador(Entidad):
 
     def mover(self, movimiento, tablero):
         if self.is_movimiento_valido(movimiento):
-            self.posicion_x = self.posicion_x + movimiento[0]
-            self.posicion_y = self.posicion_y + movimiento[1]
+            self.fila = self.fila + movimiento[0]
+            self.columna = self.columna + movimiento[1]
         
         if movimiento == "w":
             self.mover_arriba()
@@ -28,21 +28,21 @@ class Jugador(Entidad):
             self.mover_derecha()
         else:
             self.mover_abajo()
-        return (self.posicion_x, self.posicion_y)
+        return (self.fila, self.columna)
 
 
 class Raton(Jugador):
-    emojis = {'full':'🐁', 'cara':'🐭'}
+    emojis = {'default':'🐭', 'full':'🐁', 'cara':'🐭'}
 
-    def __init__(self, pos_x, pos_y, tablero, nombre='Jerry', emoji='full'):
-        super().__init__(nombre, pos_x, pos_y, tablero)
+    def __init__(self, pos_x, pos_y, emoji='default'):
+        super().__init__(pos_x, pos_y)
         self.emoji = self.emojis[emoji]
 
 class Gato(Jugador):
-    emojis = {'full':'🐈', 'cara': '🐱'}
+    emojis = {'default':'🐱', 'full':'🐈', 'cara': '🐱'}
     
-    def __init__(self, pos_x, pos_y, tablero, nombre='Tom', emoji='full'):
-        super().__init__(nombre, pos_x, pos_y, tablero)
+    def __init__(self, pos_x, pos_y, emoji='default'):
+        super().__init__(pos_x, pos_y)
         self.emoji = self.emojis[emoji]
 
     def __str__(self):
