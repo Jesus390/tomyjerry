@@ -1,257 +1,230 @@
+import os
+import time
+
+def clear():
+    '''
+    Limpia la pantalla
+    '''
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def esperar(tiempo):
+    '''
+    Espera un tiempo determinado
+    '''
+    time.sleep(tiempo)
+
 class Tablero:
-    def __init__(self, columnas, filas):
-        self.columnas = columnas
+    '''
+    Clase Tablero 2 dimensiones
+    '''
+    # variable contenedor del tablero
+    tablero = None
+
+    def __init__(self, filas, columnas):
+        '''
+        Inicializa el tablero
+        '''
         self.filas = filas
-        self.tablero = None
+        self.columnas = columnas
 
     def crear(self):
-        self.tablero = [[' . ' for _ in range(self.filas)] for _ in range(self.columnas)]
-
-    def agregar(self, entidad):
-        self.tablero[entidad.columna][entidad.fila] = f' {entidad.name} '
-
-    def update(self, entidad):
-        self.tablero[entidad.ultima_columna][entidad.ultima_fila] = ' . '
-        self.tablero[entidad.columna][entidad.fila] = f' {entidad.name} '
-
+        '''
+        Crea el tablero
+        '''
+        self.tablero =  [['.' for _ in range(self.columnas)] for _ in range(self.filas)]
+    
     def imprimir(self):
-        aux = ''
-        for i, columnas in enumerate(self.tablero):
-            for j, fila in enumerate(columnas):
-                aux += f'{fila}'
-            aux += '\n'
-        print(aux)
+        '''
+        Imprime el tablero
+        '''
+        for filas in self.tablero:
+            print(' '.join(filas))
+        print("-"*20)
+
+    def agregar_entidad(self, entidad):
+        '''
+        Agrega una entidad en el tablero
+        '''
+        self.tablero[entidad.fila][entidad.columna] = entidad.simbolo
+
+    def is_inTablero(self, fila, columna):
+        '''
+        Verifica si la entidad se encuentra dentro del tablero
+        '''
+        return 0 <= fila < self.filas and 0 <= columna < self.columnas
+    
+    def actualizar_entidad(self, entidad):
+        # Borra la posición anterior
+        for f in range(self.filas):
+            for c in range(self.columnas):
+                if self.tablero[f][c] == f' {entidad.simbolo} ':
+                    self.tablero[f][c] = '.'
+        # Coloca al jugador en la nueva posición
+        self.tablero[entidad.fila][entidad.columna] = f' {entidad.simbolo} '
 
 
-class Jugador:
-    def __init__(self, columna, fila, tablero):
-        self.ultima_columna = columna
-        self.ultima_fila = fila
-        self.columna = columna
+class Entidad:
+    '''
+    Clase Entidad
+    '''
+    def __init__(self, fila, columna):
+        '''
+        Inicializa la entidad
+        '''
         self.fila = fila
-        self.movimientos = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        self.tablero = tablero
+        self.columna = columna
 
-    def calcular_movimiento(self, posicion):
-        return (self.columna + posicion[0], self.fila + posicion[1])
+class Jugador(Entidad):
+    '''
+    Clase Jugador
+    '''
+    movimientos = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     
-    def movimientos_disponibles(self):
-        return [(self.columna + i, self.fila + j) for i, j in self.movimientos if self.is_inTablero((self.columna + i, self.fila + j))]
+    def __init__(self, fila, columna):
+        '''
+        Inicializa el jugador
+        '''
+        super().__init__(fila, columna)
+        self.ultima_fila = self.fila
+        self.ultima_columna = self.columna
 
-    def get_movimiento(self):
-        while True:
-            movimiento = input("Movimientos (a, w, d, s): ")
-            if movimiento in ['a', 'w', 'd', 's']:
-                return movimiento
-            else:
-                print("Movimiento invalido. Por favor, ingrese a, w, d, s")
-
-    def is_inTablero(self, posicion):
-        return 0 <= posicion[0] < self.tablero.filas and 0 <= posicion[1] < self.tablero.columnas
-    
-    def arriba(self):
-        return self.movimientos[3] # (-1, 0)
-    
-    def abajo(self):
-        return self.movimientos[2] # (1, 0)
-    
-    def izquierda(self):
-        return self.movimientos[1] # (0, -1)
-    
-    def derecha(self):
-        return self.movimientos[0] # (0, 1)
-
-    def mover(self, movimiento:str):
-        if movimiento.lower() == 'w':
-            posicion = self.calcular_movimiento(self.arriba())
-            if not self.is_inTablero(posicion):
-                print(f"Arriba... fuera de posicion {posicion}")
-                return
-            self.ultima_columna = self.columna
-            self.ultima_fila = self.fila
-            self.columna = posicion[0]
-            self.fila = posicion[1]
-        if movimiento.lower() == 'a':
-            posicion = self.calcular_movimiento(self.izquierda())
-            if not self.is_inTablero(posicion):
-                print(f"Izquierda... fuera de posicion {posicion}")
-                return
-            self.ultima_columna = self.columna
-            self.ultima_fila = self.fila
-            self.columna = posicion[0]
-            self.fila = posicion[1]
-        if movimiento.lower() == 'd':
-            posicion = self.calcular_movimiento(self.derecha())
-            if not self.is_inTablero(posicion):
-                print(f"Derecha... fuera de posicion {posicion}")
-                return
-            self.ultima_columna = self.columna
-            self.ultima_fila = self.fila
-            self.columna = posicion[0]
-            self.fila = posicion[1]
-        if movimiento.lower() == 's':
-            posicion = self.calcular_movimiento(self.abajo())
-            if not self.is_inTablero(posicion):
-                print(f"Abajo... fuera de posicion {posicion}")
-                return
-            self.ultima_columna = self.columna
-            self.ultima_fila = self.fila
-            self.columna = posicion[0]
-            self.fila = posicion[1]
+    def movimientos_disponibles(self, tablero):
+        '''
+        Obtiene los movimientos disponibles para el jugador
+        '''
+        return [(self.fila+movimiento[0], self.columna+movimiento[1]) for movimiento in self.movimientos if tablero.is_inTablero(self.fila+movimiento[0], self.columna+movimiento[1])]
         
-    def get_posicion(self):
-        return (self.columna, self.fila)
-    
-class Gato(Jugador):
-    def __init__(self, columna, fila, tablero, name='G'):
-        super().__init__(columna, fila, tablero)
-        self.name = name
-
 class Raton(Jugador):
-    def __init__(self, columna, fila, tablero, name='R'):
-        super().__init__(columna, fila, tablero)
-        self.name = name
+    '''
+    Clase Raton
+    '''
 
-class Game():
-    def __init__(self):
-        pass
+    def __init__(self, fila, columna, simbolo="R"):
+        '''
+        Inicializa el raton
+        '''
+        super().__init__(fila, columna)
+        self.simbolo = simbolo
+        
+    def ha_escapado(self, zona_escape):
+        return self.fila == zona_escape[0] and self.columna == zona_escape[1]
 
-    def is_gato_win(self, raton, gato):
-        return gato.fila == raton.fila and gato.columna == raton.columna
-
-def is_gato_win(raton, gato):
-    return gato.fila == raton.fila and gato.columna == raton.columna
-
-# Heuristica: DISTANCIA MANHATAN
-# def distancia_manh(xr, yr, xg, yg):
-def distancia_manh(raton, gato):
-    distancia= abs(raton.fila - gato.fila) + abs(raton.columna - gato.columna)
-    # distancia= abs(xr - xg) + abs(yr - yg)
-    return distancia
+class Gato(Jugador):
+    '''
+    Clase Gato
+    '''
+    def __init__(self, fila, columna, simbolo="G"):
+        '''
+        Inicializa el gato
+        '''
+        super().__init__(fila, columna)
+        self.simbolo = simbolo
+    
+    def is_win(self, entidad):
+        '''
+        Verifica si el gato ha ganado
+        '''
+        return self.fila == entidad.fila and self.columna == entidad.columna
 
 class Minimax:
-    def __init__(self, profundidad_max=4):
+    def __init__(self, tablero, profundidad_max=3):
         self.profundidad_max = profundidad_max
+        self.tablero = tablero
 
-    def evaluar(self, raton, gato):
-        if is_gato_win(raton, gato):
-            return -100  # pérdida para el ratón
-        return distancia_manh(raton, gato)
+    def distancia_manhattan(self, entidad, objetivo):
+        return abs(entidad.fila - objetivo.fila) + abs(entidad.columna - objetivo.columna)
 
-    def minimax(self, raton, gato, profundidad, maximizando):
-        if profundidad == 0 or is_gato_win(raton, gato):
-            return self.evaluar(raton, gato), None
+    def evaluar(self, raton, gato, jugador_actual):
+        if raton.fila == gato.fila and raton.columna == gato.columna:
+            return -100 if jugador_actual == 'raton' else 100
 
-        mejor_valor = float('-inf') if maximizando else float('inf')
+        distancia = self.distancia_manhattan(raton, gato)
+        return distancia if jugador_actual == 'raton' else -distancia
+
+    def minimax(self, raton, gato, profundidad, maximizador):
+        if profundidad == 0 or (raton.fila == gato.fila and raton.columna == gato.columna):
+            return self.evaluar(raton, gato, 'raton' if maximizador else 'gato'), None
+
+        mejor_valor = float('-inf') if maximizador else float('inf')
         mejor_mov = None
 
-        jugador = raton if maximizando else gato
-        for mov in jugador.movimientos_disponibles():
-            copia_raton = Raton(raton.columna, raton.fila, raton.tablero)
-            copia_gato = Gato(gato.columna, gato.fila, gato.tablero)
+        jugador = raton if maximizador else gato
+        for mov in jugador.movimientos_disponibles(self.tablero):
+            nuevo_raton = Raton(raton.fila, raton.columna)
+            nuevo_gato = Gato(gato.fila, gato.columna)
 
-            if maximizando:
-                copia_raton.columna, copia_raton.fila = mov
+            if maximizador:
+                nuevo_raton.fila, nuevo_raton.columna = mov
             else:
-                copia_gato.columna, copia_gato.fila = mov
+                nuevo_gato.fila, nuevo_gato.columna = mov
 
-            valor, _ = self.minimax(copia_raton, copia_gato, profundidad - 1, not maximizando)
+            valor, _ = self.minimax(nuevo_raton, nuevo_gato, profundidad - 1, not maximizador)
 
-            if maximizando and valor > mejor_valor:
+            if maximizador and valor > mejor_valor:
                 mejor_valor, mejor_mov = valor, mov
-            elif not maximizando and valor < mejor_valor:
+            elif not maximizador and valor < mejor_valor:
                 mejor_valor, mejor_mov = valor, mov
 
         return mejor_valor, mejor_mov
 
 
-if __name__=="__main__":
-    minimax = Minimax(profundidad_max=4)
-
+if __name__ == "__main__":
     filas = 5
-    columnas = 5
-    turnos = 15
-
-    # instancias
-    game = Game()
+    columnas = 7
     tablero = Tablero(filas, columnas)
-    raton = Raton(0, 0, tablero)
-    gato = Gato(filas-1, columnas-1, tablero)
-    
+    raton = Raton(0, 0)
+    gato = Gato(filas-1, columnas-1)
+    minimax = Minimax(tablero)
+
     tablero.crear()
+    tablero.agregar_entidad(raton)
+    tablero.agregar_entidad(gato)
+
+    turnos = 10
+    zona_escape = (filas - 1, columnas - 1)
     
-    tablero.agregar(raton)
-    tablero.agregar(gato)
-    
+    print("Inicio del juego")
     tablero.imprimir()
+    esperar(1)
+    while turnos > 0:
+        if gato.is_win(raton):
+            print("El gato ha ganado")
+            break  # 🚨 Salimos del ciclo
 
-    print(f" Posicion Gato: {gato.get_posicion()}")
-    print(f" Posicion Raton: {raton.get_posicion()}")
-
-    while turnos >= 0:
-        print(f"\nTurno: {5 - turnos}")
-        print(f"Distancia Manhattan: {distancia_manh(raton, gato)}")
+        if raton.ha_escapado(zona_escape):
+            print("¡El ratón ha escapado!")
+            break
+                
+        # Movimiento del ratón
+        mejor_movimiento_raton = minimax.minimax(raton, gato, 3, True)
+        if mejor_movimiento_raton and mejor_movimiento_raton[1]:
+            raton.fila, raton.columna = mejor_movimiento_raton[1]
+            tablero.actualizar_entidad(raton)
         
-        # Movimiento del RATÓN con Minimax (Max)
-        _, mejor_mov = minimax.minimax(raton, gato, 3, True)
-        if mejor_mov:
-            raton.ultima_columna, raton.ultima_fila = raton.columna, raton.fila
-            raton.columna, raton.fila = mejor_mov
-            tablero.update(raton)
+            clear()
+            tablero.imprimir()
+            print(f"Turnos restantes: {turnos}")
+            esperar(1)
 
-        # Movimiento del GATO con Minimax (Min)
-        _, mejor_mov = minimax.minimax(raton, gato, 3, False)
-        if mejor_mov:
-            gato.ultima_columna, gato.ultima_fila = gato.columna, gato.fila
-            gato.columna, gato.fila = mejor_mov
-            tablero.update(gato)
-
-        if game.is_over(raton.get_posicion(), gato.get_posicion()):
-            print(f"Juego terminado.... GATO is WIN.")
+        if gato.is_win(raton):  # Verificamos otra vez
+            print("El gato ha ganado")
             break
 
         tablero.imprimir()
+
+        # Movimiento del gato
+        mejor_movimiento_gato = minimax.minimax(raton, gato, 3, False)
+        if mejor_movimiento_gato and mejor_movimiento_gato[1]:
+            gato.fila, gato.columna = mejor_movimiento_gato[1]
+            tablero.actualizar_entidad(gato)
+
+            clear()
+            tablero.imprimir()
+            print(f"Turnos restantes: {turnos}")
+            esperar(1)
+
         turnos -= 1
-
-
-
-#     filas = 5
-#     columnas = 5
-#     turnos = 5
-
-#     # instancias
-#     game = Game()
-#     tablero = Tablero(filas, columnas)
-#     raton = Raton(0, 0, tablero)
-#     gato = Gato(filas-1, columnas-1, tablero)
-    
-#     tablero.crear()
-    
-#     tablero.agregar(raton)
-#     tablero.agregar(gato)
-    
-#     tablero.imprimir()
-
-#     print(f" Posicion Gato: {gato.get_posicion()}")
-#     print(f" Posicion Raton: {raton.get_posicion()}")
-#     while turnos >= 0:
-#         print()
-#         print(f"Distancia Manhattan: {distancia_manh(raton, gato)}")
-#         print("1. Mover raton")
-#         print("Movimientos disponibles Raton:", raton.movimientos_disponibles())
-#         movimiento = input("Ingresa el movimiento (Raton): ")
-#         raton.mover(movimiento)
-#         tablero.update(raton)
-
-#         print("2. Mover gato")
-#         print("Movimientos disponibles Gato:", gato.movimientos_disponibles())
-#         movimiento = input("Ingresa el movimiento (Gato): ")
-#         gato.mover(movimiento)
-#         tablero.update(gato)
-        
-#         if game.is_over(raton.get_posicion(), gato.get_posicion()):
-#             print(f"Juego terminado.... GATO is WIN.")
-#             break
-
-#         tablero.imprimir()
-#         turnos -= 1
+    else:
+        clear()
+        print("El juego ha terminado")
+        print("El juego terminó por límite de turnos.")
