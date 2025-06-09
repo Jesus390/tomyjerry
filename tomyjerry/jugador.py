@@ -8,14 +8,12 @@ class Entidad():
         self.ultima_posicion_y = None
 
 class Jugador(Entidad):
-    def __init__(self, nombre, posicion_x, posicion_y, tablero):
+    def __init__(self, posicion_x, posicion_y):
         super().__init__(posicion_x, posicion_y)
-        self.nombre = nombre
-        self.tablero = tablero
         self.movimientos = [(1, 0), (-1, 0), (0, 1), (0, -1)] # para el minimax
 
-    def is_movimiento_valido(self, movimiento):
-        return 0 <= movimiento[0] < self.tablero.fila and 0 <= movimiento[1] < self.tablero.columna
+    def is_movimiento_valido(self, movimiento, tablero):
+        return 0 <= movimiento[0] < tablero.fila and 0 <= movimiento[1] < tablero.columna
 
     def mover(self, movimiento, tablero):
         if self.is_movimiento_valido(movimiento):
