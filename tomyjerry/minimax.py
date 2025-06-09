@@ -1,3 +1,5 @@
+from jugador import Raton, Gato
+
 class Minimax:
     def __init__(self, tablero, profundidad_max=3):
         self.profundidad_max = profundidad_max
