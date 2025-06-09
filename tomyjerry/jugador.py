@@ -15,21 +15,11 @@ class Jugador(Entidad):
     def is_movimiento_valido(self, movimiento, tablero):
         return 0 <= movimiento[0] < tablero.fila and 0 <= movimiento[1] < tablero.columna
 
-    def mover(self, movimiento, tablero):
-        if self.is_movimiento_valido(movimiento):
-            self.fila = self.fila + movimiento[0]
-            self.columna = self.columna + movimiento[1]
-        
-        if movimiento == "w":
-            self.mover_arriba()
-        elif movimiento == "a":
-            self.mover_izquierda()
-        elif movimiento == "d":
-            self.mover_derecha()
-        else:
-            self.mover_abajo()
-        return (self.fila, self.columna)
-
+    def mover(self, fila, columna):
+        self.ultima_columna = self.columna
+        self.ultima_fila = self.fila
+        self.columna = columna
+        self.fila = fila
 
 class Raton(Jugador):
     emojis = {'default':'🐭', 'full':'🐁', 'cara':'🐭'}
