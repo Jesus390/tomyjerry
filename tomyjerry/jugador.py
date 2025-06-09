@@ -34,15 +34,15 @@ class Jugador(Entidad):
 class Raton(Jugador):
     emojis = {'default':'🐭', 'full':'🐁', 'cara':'🐭'}
 
-    def __init__(self, pos_x, pos_y, emoji='default'):
-        super().__init__(pos_x, pos_y)
+    def __init__(self, columna, fila, emoji='default'):
+        super().__init__(columna, fila)
         self.emoji = self.emojis[emoji]
 
 class Gato(Jugador):
     emojis = {'default':'🐱', 'full':'🐈', 'cara': '🐱'}
     
-    def __init__(self, pos_x, pos_y, emoji='default'):
-        super().__init__(pos_x, pos_y)
+    def __init__(self, columna, fila, emoji='default'):
+        super().__init__(columna, fila)
         self.emoji = self.emojis[emoji]
 
     def __str__(self):
@@ -54,9 +54,9 @@ class Obstaculo(Entidad):
 class Pared(Obstaculo):
     emojis = {'default': '🚧', 'ladrillo': '🧱'}
 
-    def __init__(self, pos_x, pos_y, emoji='default'):
-        super().__init__(pos_x, pos_y)
+    def __init__(self, columna, fila, emoji='default'):
+        super().__init__(columna, fila)
         self.emoji = self.emojis[emoji]
 
     def __str__(self):
-        return f"Class {self.pos_x} {self.pos_y} {self.emoji}"
+        return f"Class {self.columna} {self.fila} {self.emoji}"
