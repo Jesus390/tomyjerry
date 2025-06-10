@@ -23,3 +23,5 @@ class Tablero:
             print("".join(filas))
         print()
         
+    def is_inTablero(self, fila, columna):
+        return 0 <= fila < self.fila and 0 <= columna < self.columna
