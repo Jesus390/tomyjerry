@@ -1,3 +1,5 @@
+import random
+
 class Entidad():
     def __init__(self, fila, columna):
         self.fila = fila
@@ -33,6 +35,9 @@ class Jugador(Entidad):
 
     def movimientos_disponibles(self, tablero):
         return [(posicion[0], posicion[1]) for posicion in self.movimientos if tablero.is_inTablero(self.fila+posicion[0], self.columna+posicion[1])]
+    
+    def mover_random(self, tablero):
+        return random.choice(self.movimientos_disponibles(tablero))
 
 class Raton(Jugador):
     emojis = {'default':'🐭', 'full':'🐁', 'cara':'🐭'}
