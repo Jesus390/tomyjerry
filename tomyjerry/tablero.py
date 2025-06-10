@@ -15,11 +15,10 @@ class Tablero:
         self.tablero[entidad.fila][entidad.columna] = entidad.emoji
    
     def update(self, entidad):
-        self.tablero[entidad.ultima_posicion_x][entidad.ultima_posicion_y] = self.colores[self.color]
-        self.tablero[entidad.posicion_x][entidad.posicion_y] = entidad.emoji
+        self.tablero[entidad.ultima_fila][entidad.ultima_columna] = self.colores[self.color]
+        self.tablero[entidad.fila][entidad.columna] = entidad.emoji
 
     def imprimir(self):
-        print(self.fila, self.columna)
         for filas in self.tablero:
             print("".join(filas))
         print()
