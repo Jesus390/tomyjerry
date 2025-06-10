@@ -10,14 +10,17 @@ class Jugador(Entidad):
         super().__init__(fila, columna)
         self.movimientos = [(1, 0), (-1, 0), (0, 1), (0, -1)] # para el minimax
 
-    def is_movimiento_valido(self, fila, columna, tablero):
-        return 0 <= fila < tablero.fila and 0 <= columna < tablero.columna
+    def calcular_movimiento(self, fila, columna):
+        return self.fila+fila, self.columna+columna
 
     def mover(self, fila, columna):
         self.ultima_columna = self.columna
         self.ultima_fila = self.fila
         self.columna = columna
         self.fila = fila
+
+    def movimientos_disponibles(self, tablero):
+        return [(posicion[0], posicion[1]) for posicion in self.movimientos if tablero.is_inTablero(self.fila+posicion[0], self.columna+posicion[1])]
 
 class Raton(Jugador):
     emojis = {'default':'🐭', 'full':'🐁', 'cara':'🐭'}
