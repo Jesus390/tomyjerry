@@ -94,12 +94,13 @@ void resolver(Matriz &tablero, int &filas, int &columnas) {
             tablero[filas - 2][columnas - 2] = 'S';
 
             std::cout << "El laberinto se ha resuelto automáticamente:\n\n";
-            for (int i = 0; i < filas; ++i) {
-                for (int j = 0; j < columnas; ++j) {
-                    std::cout << tablero[i][j] << " ";
-                }
-                std::cout << "\n";
-            }
+            imprimir_tablero(tablero, filas, columnas);
+            // for (int i = 0; i < filas; ++i) {
+            //     for (int j = 0; j < columnas; ++j) {
+            //         std::cout << tablero[i][j] << " ";
+            //     }
+            //     std::cout << "\n";
+            // }
             
             // for (const auto& fila : tablero) {
             //     for (char c : fila) std::cout << c << " ";
@@ -222,9 +223,16 @@ void generar_laberinto(Matriz &tablero, int fila, int columna, int &filas, int &
 }
 
 void imprimir_tablero(Matriz tablero, int &filas, int &columnas) {
-    for (int i=0; i<filas; i++) {
-        for (int j=0; j<columnas; j++) {
-            std::cout << tablero[i][j] << " ";
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            switch (tablero[i][j]) {
+                case '#': std::cout << "\033[1;30m#\033[0m "; break; // gris oscuro (pared)
+                case '.': std::cout << "\033[1;37m.\033[0m "; break; // blanco (camino)
+                case 'E': std::cout << "\033[1;32mE\033[0m "; break; // verde (entrada)
+                case 'S': std::cout << "\033[1;31mS\033[0m "; break; // rojo (salida)
+                case 'x': std::cout << "\033[1;34mx\033[0m "; break; // azul (camino solución)
+                default:  std::cout << tablero[i][j] << " "; break;
+            }
         }
         std::cout << std::endl;
     }
