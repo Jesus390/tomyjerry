@@ -114,7 +114,7 @@ void resolver(Matriz &tablero, int &filas, int &columnas) {
             int nx = x + dx;
             int ny = y + dy;
             if (nx >= 0 && nx < filas && ny >= 0 && ny < columnas) {
-                if ((tablero[nx][ny] == '.' || tablero[nx][ny] == 'S') && !visitado.count({nx, ny})) {
+                if ((tablero[nx][ny] == ' ' || tablero[nx][ny] == 'S') && !visitado.count({nx, ny})) {
                     visitado.insert({nx, ny});
                     auto nuevo_camino = camino;
                     nuevo_camino.push_back({nx, ny});
@@ -198,7 +198,7 @@ void agregarES(Matriz &tablero, int &filas, int &columnas) {
 
 
 void generar_laberinto(Matriz &tablero, int fila, int columna, int &filas, int &columnas) {
-    tablero[fila][columna] = '.';
+    tablero[fila][columna] = ' ';
 
     std::vector<std::pair<int, int>> movimientos = {{0, 2}, {0, -2}, {2, 0}, {-2, 0}};
     
@@ -216,7 +216,7 @@ void generar_laberinto(Matriz &tablero, int fila, int columna, int &filas, int &
         if (nueva_fila >= 0 && nueva_fila < filas &&
             nueva_columna >= 0 && nueva_columna < columnas && 
             tablero[nueva_fila][nueva_columna] == '#') {
-                tablero[fila + dfila / 2][columna + dcolumna / 2] = '.';
+                tablero[fila + dfila / 2][columna + dcolumna / 2] = ' ';
                 generar_laberinto(tablero, nueva_fila, nueva_columna, filas, columnas);
         }
     }
