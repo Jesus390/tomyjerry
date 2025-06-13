@@ -68,6 +68,7 @@ void liberar_tablero(Matriz &tablero, int &filas) {
     delete[] tablero;
 }
 
+// Breadth-First Search (BFS) -> Busqueda en anchura.
 void resolver(Matriz &tablero, int &filas, int &columnas) {
     std::pair<int, int> entrada = {1, 1};
     std::pair<int, int> salida = {filas - 2, columnas - 2};
@@ -95,17 +96,6 @@ void resolver(Matriz &tablero, int &filas, int &columnas) {
 
             std::cout << "El laberinto se ha resuelto automáticamente:\n\n";
             imprimir_tablero(tablero, filas, columnas);
-            // for (int i = 0; i < filas; ++i) {
-            //     for (int j = 0; j < columnas; ++j) {
-            //         std::cout << tablero[i][j] << " ";
-            //     }
-            //     std::cout << "\n";
-            // }
-            
-            // for (const auto& fila : tablero) {
-            //     for (char c : fila) std::cout << c << " ";
-            //     std::cout << "\n";
-            // }
             std::cout << "\n";
             return;
         }
@@ -130,73 +120,6 @@ void agregarES(Matriz &tablero, int &filas, int &columnas) {
     tablero[filas-2][columnas-2] = 'S';
 }
 
-// void resolver(Laberinto &laberinto, int &filas, int &columnas) {
-//     std::pair<int, int> entrada = {1, 1};
-//     std::pair<int, int> salida = {filas - 2, columnas - 2};
-
-//     std::deque<std::pair<std::pair<int, int>, std::vector<std::pair<int, int>>>> cola;
-//     std::set<std::pair<int, int>> visitado;
-
-//     cola.push_back({entrada, {entrada}});
-//     visitado.insert(entrada);
-
-//     std::vector<std::pair<int, int>> movimientos = {{1,0}, {-1,0}, {0,1}, {0,-1}};
-
-//     while (!cola.empty()) {
-//         auto [pos, camino] = cola.front();
-//         cola.pop_front();
-
-//         auto [x, y] = pos;
-//         if (pos == salida) {
-//             for (const auto& [camino_x, camino_y] : camino) {
-//                 laberinto[camino_x][camino_y] = 'x';
-//             }
-
-//             laberinto[1][1] = 'E';
-//             laberinto[filas - 2][columnas - 2] = 'S';
-
-//             std::cout << "El laberinto se ha resuelto automáticamente:\n\n";
-//             for (const auto& fila : laberinto) {
-//                 for (char c : fila) std::cout << c << " ";
-//                 std::cout << "\n";
-//             }
-//             std::cout << "\n";
-//             return;
-//         }
-
-//         for (auto [dx, dy] : movimientos) {
-//             int nx = x + dx;
-//             int ny = y + dy;
-//             if (nx >= 0 && nx < filas && ny >= 0 && ny < columnas) {
-//                 if ((laberinto[nx][ny] == '.' || laberinto[nx][ny] == 'S') && !visitado.count({nx, ny})) {
-//                     visitado.insert({nx, ny});
-//                     auto nuevo_camino = camino;
-//                     nuevo_camino.push_back({nx, ny});
-//                     cola.push_back({{nx, ny}, nuevo_camino});
-//                 }
-//             }
-//         }
-//     }
-// }
-
-
-// void resolver(Matriz &tablero, int &filas, int &columnas) {
-//     std::pair<int, int> entrada = {1, 1};
-//     std::pair<int, int> salida = {filas-2, columnas-2};
-
-//     std::deque<std::pair<std::pair<int, int>, std::vector<std::pair<int, int>>>> cola;
-//     cola.push_front({entrada, {entrada}});
-
-//     std::set<std::pair<int, int>> visitado;
-//     visitado.insert(entrada);
-
-//     std::vector<std::pair<int, int>> movimientos = {{0, 2}, {0, -2}, {2, 0}, {-2, 0}};
-
-
-
-// }
-
-
 void generar_laberinto(Matriz &tablero, int fila, int columna, int &filas, int &columnas) {
     tablero[fila][columna] = ' ';
 
@@ -206,8 +129,6 @@ void generar_laberinto(Matriz &tablero, int fila, int columna, int &filas, int &
     std::mt19937 mezcla_aleatoria(rd());
 
     std::shuffle(movimientos.begin(), movimientos.end(), mezcla_aleatoria);
-
-    // std::cout << "Generando laberinto..." << std::endl;
 
     for (const auto& [dfila, dcolumna]: movimientos) {
         int nueva_fila = fila + dfila;
